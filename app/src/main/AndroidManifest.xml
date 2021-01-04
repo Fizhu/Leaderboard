@@ -3,12 +3,14 @@
     package="com.fizhu.leaderboard">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/leaderboard_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/leaderboard_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Leaderboard">
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,8 +3,9 @@ package com.fizhu.leaderboard
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
+import com.fizhu.leaderboard.data.db.Db
+import com.fizhu.leaderboard.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -25,7 +26,9 @@ class App : Application() {
 
         db = Db.getInstance(this)
 
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
 
         startKoin {
             androidContext(this@App)
