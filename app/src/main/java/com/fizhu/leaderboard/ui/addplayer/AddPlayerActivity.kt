@@ -59,7 +59,7 @@ class AddPlayerActivity : AppCompatActivity() {
             btnNext.setOnClickListener {
                 if (this@AddPlayerActivity.viewModel.getListPlayer().size > 1) {
                     val i = Intent(this@AddPlayerActivity, AddScoringActivity::class.java)
-                    i.putExtra("data", this@AddPlayerActivity.viewModel.getName())
+                    i.putExtra("data", this@AddPlayerActivity.viewModel.name.value)
                     val bundle = Bundle()
                     bundle.putParcelableArrayList(
                         "list",

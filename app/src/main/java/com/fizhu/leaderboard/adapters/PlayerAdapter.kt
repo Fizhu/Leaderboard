@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fizhu.leaderboard.data.models.Player
 import com.fizhu.leaderboard.databinding.ItemListPlayerBinding
+import com.fizhu.leaderboard.utils.ext.loge
 
 /**
  * Created by fizhu on 15,July,2020
@@ -78,10 +79,14 @@ class PlayerAdapter(
     }
 
     private fun setImage(url: String, iv: ImageView) {
-        Glide.with(iv.context)
-            .asBitmap()
-            .load(iv.context.resources.getIdentifier(url, "drawable", iv.context.packageName))
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(iv)
+        try {
+            Glide.with(iv.context)
+                .asBitmap()
+                .load(iv.context.resources.getIdentifier(url, "drawable", iv.context.packageName))
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(iv)
+        } catch (e: Exception) {
+            loge(e.localizedMessage)
+        }
     }
 }

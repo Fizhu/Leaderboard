@@ -61,6 +61,8 @@ class AddScoringViewModel(
         this.listPlayer.value = listPlayer
     }
 
+    fun getListPlayer(): List<Player> = listPlayer.value ?: emptyList()
+
     fun incrementPoint() {
         point += 1
         pointString.value = point.toString()
