@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fizhu.leaderboard.data.models.Player
 import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.raw.RawData
+import com.fizhu.leaderboard.data.repository.Repository
 import com.fizhu.leaderboard.utils.base.BaseViewModel
 
 /**
@@ -11,7 +12,9 @@ import com.fizhu.leaderboard.utils.base.BaseViewModel
  * https://github.com/Fizhu
  */
 
-class AddScoringViewModel : BaseViewModel() {
+class AddScoringViewModel(
+    private val repository: Repository
+) : BaseViewModel() {
 
     val name = MutableLiveData<String>()
     val listPlayer = MutableLiveData<List<Player>>()
@@ -59,8 +62,7 @@ class AddScoringViewModel : BaseViewModel() {
         listPoint.postValue(listPointTemp)
     }
 
-    fun removePoint(index: Int) {
-        listPointTemp.removeAt(index)
-        listPoint.postValue(listPointTemp)
+    fun removePoint(point: Point) {
+        listPointTemp.remove(point)
     }
 }

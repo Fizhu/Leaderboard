@@ -18,7 +18,7 @@ import com.fizhu.leaderboard.databinding.ItemListPlayerBinding
  */
 
 class PlayerAdapter(
-    private val callBackDelete: (position: Int) -> Unit
+    private val callBackDelete: (player: Player) -> Unit
 ) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
     private val list: MutableList<Player> = mutableListOf()
@@ -69,7 +69,11 @@ class PlayerAdapter(
         with(holder.binding) {
             tvName.text = data.name
             setImage(data.avatar ?: "", iv)
-            imageView.setOnClickListener { callBackDelete.invoke(position) }
+            imageView.setOnClickListener {
+                callBackDelete.invoke(data)
+                list.remove(data)
+                notifyItemRemoved(position)
+            }
         }
     }
 

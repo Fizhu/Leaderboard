@@ -37,7 +37,7 @@ val viewModelModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { CreateNewViewModel() }
     viewModel { AddPlayerViewModel() }
-    viewModel { AddScoringViewModel() }
+    viewModel { AddScoringViewModel(get()) }
 }
 
 val appModule =

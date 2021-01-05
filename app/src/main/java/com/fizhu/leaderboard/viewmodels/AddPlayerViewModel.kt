@@ -39,8 +39,7 @@ class AddPlayerViewModel : BaseViewModel() {
         listPlayer.postValue(listPlayerTemp)
     }
 
-    fun removePlayer(index: Int) {
-        listPlayerTemp.removeAt(index)
-        listPlayer.postValue(listPlayerTemp)
+    fun removePlayer(player: Player) {
+        listPlayerTemp.remove(player)
     }
 }

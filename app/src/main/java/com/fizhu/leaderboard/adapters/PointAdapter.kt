@@ -18,7 +18,7 @@ import com.fizhu.leaderboard.databinding.ItemListIconBinding
  */
 
 class PointAdapter(
-    private val callBackDelete: (position: Int) -> Unit
+    private val callBackDelete: (point: Point) -> Unit
 ) : RecyclerView.Adapter<PointAdapter.ViewHolder>() {
 
     private val list: MutableList<Point> = mutableListOf()
@@ -76,7 +76,11 @@ class PointAdapter(
             }
             tvPoint.text = s
             setImage(data.icon ?: "", iv)
-            btnRemove.setOnClickListener { callBackDelete.invoke(position) }
+            btnRemove.setOnClickListener {
+                callBackDelete.invoke(data)
+                list.remove(data)
+                notifyItemRemoved(position)
+            }
         }
     }
 
