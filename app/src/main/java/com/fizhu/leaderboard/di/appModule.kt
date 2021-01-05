@@ -6,6 +6,7 @@ import com.fizhu.leaderboard.data.db.LocalDataSource
 import com.fizhu.leaderboard.data.repository.AppRepository
 import com.fizhu.leaderboard.data.repository.Repository
 import com.fizhu.leaderboard.viewmodels.AddPlayerViewModel
+import com.fizhu.leaderboard.viewmodels.AddScoringViewModel
 import com.fizhu.leaderboard.viewmodels.CreateNewViewModel
 import com.fizhu.leaderboard.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -36,6 +37,7 @@ val viewModelModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { CreateNewViewModel() }
     viewModel { AddPlayerViewModel() }
+    viewModel { AddScoringViewModel() }
 }
 
 val appModule =

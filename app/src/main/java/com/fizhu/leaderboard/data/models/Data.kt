@@ -1,10 +1,12 @@
 package com.fizhu.leaderboard.data.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by fizhu on 06,July,2020
@@ -12,6 +14,7 @@ import com.google.gson.annotations.SerializedName
  */
 
 @Entity(tableName = "player_table")
+@Parcelize
 data class Player(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -21,7 +24,7 @@ data class Player(
     var name: String? = null,
     @Expose @SerializedName("avatar")
     var avatar: String? = null
-)
+) : Parcelable
 
 @Entity(tableName = "game_table")
 data class Game(
@@ -53,4 +56,9 @@ data class Score(
     var gameId: Int? = null,
     @Expose @SerializedName("point")
     var point: Int? = null,
+)
+
+data class Point(
+    var points: Int? = null,
+    var icon: String? = null
 )

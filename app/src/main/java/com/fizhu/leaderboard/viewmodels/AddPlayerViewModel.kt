@@ -22,7 +22,7 @@ class AddPlayerViewModel : BaseViewModel() {
         avatar.value = RawData.getAnimalList()[47]
     }
 
-    fun getName() = playerName.value?:""
+    fun getName() = playerName.value ?: ""
 
     fun setAvatar(avatar: String) {
         this.avatar.value = avatar
@@ -31,6 +31,8 @@ class AddPlayerViewModel : BaseViewModel() {
     fun setGameName(name: String) {
         this.name.value = name
     }
+
+    fun getListPlayer() = listPlayerTemp
 
     fun addNewPlayer() {
         listPlayerTemp.add(Player(null, playerName.value, avatar.value))

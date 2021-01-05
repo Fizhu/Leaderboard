@@ -11,12 +11,15 @@
         android:layout_marginHorizontal="@dimen/margin"
         app:cardCornerRadius="@dimen/padding"
         app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.0"
+        app:strokeColor="@color/divider"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -59,7 +62,7 @@
         android:layout_width="@dimen/margin_64"
         android:layout_height="@dimen/margin_64"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginTop="@dimen/padding"
         android:layout_marginBottom="@dimen/margin"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
