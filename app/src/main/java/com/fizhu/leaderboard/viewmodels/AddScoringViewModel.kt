@@ -1,11 +1,21 @@
 package com.fizhu.leaderboard.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.data.models.Player
 import com.fizhu.leaderboard.data.models.Point
+import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.data.raw.RawData
 import com.fizhu.leaderboard.data.repository.Repository
+import com.fizhu.leaderboard.utils.DateTimeHelper
+import com.fizhu.leaderboard.utils.SingleLiveEvent
 import com.fizhu.leaderboard.utils.base.BaseViewModel
+import com.fizhu.leaderboard.utils.ext.doBack
+import com.fizhu.leaderboard.utils.ext.loge
+import com.fizhu.leaderboard.utils.ext.logi
+import com.fizhu.leaderboard.utils.ext.route
+import java.util.*
 
 /**
  * Created by fizhu on 07,July,2020
@@ -25,6 +35,10 @@ class AddScoringViewModel(
 
     val listPoint = MutableLiveData<List<Point>>()
     private val listPointTemp = mutableListOf<Point>()
+
+    private val _isDone = SingleLiveEvent<Boolean>()
+    val isDone: LiveData<Boolean>
+        get() = _isDone
 
     init {
         icon.value = RawData.getObjectList()[50]
@@ -65,4 +79,83 @@ class AddScoringViewModel(
     fun removePoint(point: Point) {
         listPointTemp.remove(point)
     }
+
+    private fun addGameToDb() {
+        val game = Game(
+            id = null,
+            name = name.value,
+            date = DateTimeHelper.format(
+                Date(),
+                DateTimeHelper.FORMAT_DATE_DMY_LONG_MONTH_NO_SEPARATOR
+            ),
+            status = false,
+            playerCount = listPlayer.value?.size,
+            totalRound = 0
+        )
+        doBack(
+            action = {
+                repository.insertGame(game)
+            },
+            success = {
+                logi("success insert data to db")
+                getLastestGame()
+            },
+            error = { loge("failed insert data to db") }
+        )
+    }
+
+    private fun getLastestGame() {
+        compositeDisposable.route(repository.getLastestGame,
+            io = {
+                if (it.isNotEmpty()) {
+                    val game = it[0]
+                    insertAllScores(game)
+                } else {
+                    loge("failed get lastest game data")
+                }
+            },
+            error = {
+                loge(it.localizedMessage)
+            })
+    }
+
+    private fun insertAllScores(game: Game) {
+        val list = mutableListOf<Score>()
+        listPlayer.value?.forEach {
+            list.add(
+                Score(
+                    id = null,
+                    playerId = it.id,
+                    gameId = game.id,
+                    point = 0
+                )
+            )
+        }
+        doBack(
+            action = {
+                repository.insertScores(list)
+            },
+            success = {
+                logi("success insert data to db")
+                _isDone.postValue(true)
+            },
+            error = { loge("failed insert data to db") }
+        )
+    }
+
+    fun insertPlayersToDb() {
+        listPlayer.value?.let { listPlayer ->
+            doBack(
+                action = {
+                    repository.insertPlayers(listPlayer)
+                },
+                success = {
+                    logi("success insert data to db")
+                    addGameToDb()
+                },
+                error = { loge("failed insert data to db") }
+            )
+        }
+    }
+
 }

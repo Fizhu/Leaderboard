@@ -23,15 +23,6 @@ class MainViewModel(
     val isExist: LiveData<Boolean>
         get() = _isExist
 
-    init {
-        val list = mutableListOf<Game>()
-        repeat(10) {
-            list.add(Game(id = it, name = "Test ajaaaaaa"))
-        }
-        listGame.postValue(list)
-        _isExist.postValue(true)
-    }
-
     fun getListGame() {
         _isExist.postValue(false)
         compositeDisposable.route(repository.getAllGame,

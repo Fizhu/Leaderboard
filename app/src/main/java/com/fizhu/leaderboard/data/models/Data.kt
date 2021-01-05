@@ -37,7 +37,7 @@ data class Game(
     @Expose @SerializedName("date")
     var date: String? = null,
     @Expose @SerializedName("status")
-    var boolean: Boolean? = false,
+    var status: Boolean? = false,
     @Expose @SerializedName("player_count")
     var playerCount: Int? = null,
     @Expose @SerializedName("total_round")

@@ -1,9 +1,12 @@
 package com.fizhu.leaderboard.data.db
 
 import com.fizhu.leaderboard.data.models.Game
+import com.fizhu.leaderboard.data.models.Player
+import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.utils.ext.doBack
 import com.fizhu.leaderboard.utils.ext.loge
 import com.fizhu.leaderboard.utils.ext.logi
+import io.reactivex.Observable
 
 /**
  * Created by fizhu on 07,July,2020
@@ -15,16 +18,14 @@ open class LocalDataSource constructor(
 
     val getAllGame = appDao.getAllGame
 
-    fun insertGame(game: Game) {
-        doBack(
-            action = {
-                appDao.insertGame(game)
-            },
-            success = { logi("success insert user to db") },
-            error = { loge("failed insert user to db") }
-        )
-    }
+    val getLastestGame = appDao.getLastestGame
+
+    fun insertGame(game: Game) = appDao.insertGame(game)
 
     fun getGameById(id: Int) = appDao.getGameById(id)
+
+    fun insertPlayers(listPlayer: List<Player>) = appDao.insertPlayers(listPlayer)
+
+    fun insertScores(listScore: List<Score>) = appDao.insertScores(listScore)
 
 }

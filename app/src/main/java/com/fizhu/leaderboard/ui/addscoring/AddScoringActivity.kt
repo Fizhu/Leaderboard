@@ -1,5 +1,6 @@
 package com.fizhu.leaderboard.ui.addscoring
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EdgeEffect
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import com.fizhu.leaderboard.data.models.Player
 import com.fizhu.leaderboard.data.raw.RawData
 import com.fizhu.leaderboard.databinding.ActivityAddScoringBinding
 import com.fizhu.leaderboard.ui.dialog.AvatarDialog
+import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
 import com.fizhu.leaderboard.utils.ext.observe
 import com.fizhu.leaderboard.viewmodels.AddScoringViewModel
@@ -53,7 +55,7 @@ class AddScoringActivity : AppCompatActivity() {
             btnPlus.setOnClickListener { this@AddScoringActivity.viewModel.incrementPoint() }
             btnMinus.setOnClickListener { this@AddScoringActivity.viewModel.decrementPoint() }
             btnNext.setOnClickListener {
-
+                this@AddScoringActivity.viewModel.insertPlayersToDb()
             }
         }
         binding.rv.let {
@@ -149,6 +151,15 @@ class AddScoringActivity : AppCompatActivity() {
         observe(viewModel.pointString) {
             viewModel.setPoint(it)
             binding.tvPoint.text = it
+        }
+
+        observe(viewModel.isDone) {
+            if (it) {
+                val i = Intent(this, MainActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+                finish()
+            }
         }
     }
 

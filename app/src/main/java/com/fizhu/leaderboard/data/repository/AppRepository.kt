@@ -2,6 +2,8 @@ package com.fizhu.leaderboard.data.repository
 
 import com.fizhu.leaderboard.data.db.LocalDataSource
 import com.fizhu.leaderboard.data.models.Game
+import com.fizhu.leaderboard.data.models.Player
+import com.fizhu.leaderboard.data.models.Score
 import io.reactivex.Observable
 
 /**
@@ -14,9 +16,16 @@ open class AppRepository constructor(
     override val getAllGame: Observable<List<Game>>
         get() = db.getAllGame
 
-    override fun getGameById(id: Int): Observable<Game> = db.getGameById(id)
+    override val getLastestGame: Observable<List<Game>>
+        get() = db.getLastestGame
+
+    override fun getGameById(id: Int): Observable<List<Game>> = db.getGameById(id)
 
     override fun insertGame(game: Game) = db.insertGame(game)
+
+    override fun insertPlayers(listPlayer: List<Player>) = db.insertPlayers(listPlayer)
+
+    override fun insertScores(listScore: List<Score>) = db.insertScores(listScore)
 
 
 }

@@ -5,6 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.fizhu.leaderboard.data.models.Game
+import com.fizhu.leaderboard.data.models.Player
+import com.fizhu.leaderboard.data.models.Score
 import io.reactivex.Observable
 
 /**
@@ -18,10 +20,19 @@ interface AppDao {
     @get:Query("SELECT * FROM game_table")
     val getAllGame: Observable<List<Game>>
 
+    @get:Query("SELECT * FROM game_table ORDER BY id DESC LIMIT 1")
+    val getLastestGame: Observable<List<Game>>
+
     @Query("SELECT * FROM game_table WHERE id = :id LIMIT 1")
-    fun getGameById(id: Int): Observable<Game>
+    fun getGameById(id: Int): Observable<List<Game>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertGame(game: Game)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPlayers(listPlayer: List<Player>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertScores(listScore: List<Score>)
 
 }
