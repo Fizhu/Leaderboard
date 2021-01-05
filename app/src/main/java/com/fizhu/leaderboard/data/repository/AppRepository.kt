@@ -27,5 +27,8 @@ open class AppRepository constructor(
 
     override fun insertScores(listScore: List<Score>) = db.insertScores(listScore)
 
+    override fun getPlayerByIdGame(gameId: Int): Observable<List<Player>> =
+        db.getPlayerByIdGame(gameId)
+
 
 }

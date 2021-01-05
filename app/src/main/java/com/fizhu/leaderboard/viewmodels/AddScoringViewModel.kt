@@ -82,7 +82,7 @@ class AddScoringViewModel(
         listPointTemp.remove(point)
     }
 
-    private fun addGameToDb() {
+    fun addGameToDb() {
         val game = Game(
             id = null,
             name = name.value,
@@ -111,7 +111,7 @@ class AddScoringViewModel(
             io = {
                 if (it.isNotEmpty()) {
                     val game = it[0]
-                    insertAllScores(game)
+                    insertPlayersToDb(game)
                 } else {
                     loge("failed get lastest game data")
                 }
@@ -121,9 +121,24 @@ class AddScoringViewModel(
             })
     }
 
-    private fun insertAllScores(game: Game) {
+    private fun getPlayerByGameId(game: Game) {
+        compositeDisposable.route(repository.getPlayerByIdGame(game.id ?: 0),
+            io = {
+                if (it.isNotEmpty()) {
+                    insertAllScores(game, it)
+
+                } else {
+                    loge("failed get lastest game data")
+                }
+            },
+            error = {
+                loge(it.localizedMessage)
+            })
+    }
+
+    private fun insertAllScores(game: Game, listPlayer: List<Player>) {
         val list = mutableListOf<Score>()
-        listPlayer.value?.forEach {
+        listPlayer.forEach {
             list.add(
                 Score(
                     id = null,
@@ -145,19 +160,28 @@ class AddScoringViewModel(
         )
     }
 
-    fun insertPlayersToDb() {
-        listPlayer.value?.let { listPlayer ->
-            doBack(
-                action = {
-                    repository.insertPlayers(listPlayer)
-                },
-                success = {
-                    logi("success insert data to db")
-                    addGameToDb()
-                },
-                error = { loge("failed insert data to db") }
+    private fun insertPlayersToDb(game: Game) {
+        val list = mutableListOf<Player>()
+        getListPlayer().forEach {
+            list.add(
+                Player(
+                    id = it.id,
+                    gameId = game.id,
+                    name = it.name,
+                    avatar = it.avatar
+                )
             )
         }
+        doBack(
+            action = {
+                repository.insertPlayers(list)
+            },
+            success = {
+                logi("success insert data to db")
+                getPlayerByGameId(game)
+            },
+            error = { loge("failed insert data to db") }
+        )
     }
 
 }

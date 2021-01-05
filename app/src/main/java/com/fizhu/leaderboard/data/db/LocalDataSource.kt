@@ -28,4 +28,6 @@ open class LocalDataSource constructor(
 
     fun insertScores(listScore: List<Score>) = appDao.insertScores(listScore)
 
+    fun getPlayerByIdGame(gameId: Int) = appDao.getPlayerByIdGame(gameId)
+
 }

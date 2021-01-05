@@ -20,6 +20,8 @@ data class Player(
     @ColumnInfo(name = "id")
     @Expose @SerializedName("id")
     var id: Int? = null,
+    @Expose @SerializedName("game_id")
+    var gameId: Int? = null,
     @Expose @SerializedName("name")
     var name: String? = null,
     @Expose @SerializedName("avatar")
