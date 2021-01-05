@@ -18,9 +18,7 @@ import com.fizhu.leaderboard.databinding.ItemListGameBinding
  * https://github.com/Fizhu
  */
 
-class GameAdapter(
-    private val context: Context,
-    private val callBack: (game: Game) -> Unit
+class GameAdapter(private val callBack: (game: Game) -> Unit
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     private val list: MutableList<Game> = mutableListOf()
@@ -34,7 +32,7 @@ class GameAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             ItemListGameBinding.inflate(
-                LayoutInflater.from(context),
+                LayoutInflater.from(parent.context),
                 parent,
                 false
             ).root
@@ -73,11 +71,4 @@ class GameAdapter(
         }
     }
 
-    private fun setImage(image: Int, iv: ImageView) {
-        Glide.with(context)
-            .asBitmap()
-            .load(image)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(iv)
-    }
 }

@@ -5,6 +5,8 @@ import com.fizhu.leaderboard.data.db.Db
 import com.fizhu.leaderboard.data.db.LocalDataSource
 import com.fizhu.leaderboard.data.repository.AppRepository
 import com.fizhu.leaderboard.data.repository.Repository
+import com.fizhu.leaderboard.viewmodels.AddPlayerViewModel
+import com.fizhu.leaderboard.viewmodels.CreateNewViewModel
 import com.fizhu.leaderboard.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -32,6 +34,8 @@ val dataSourceModule = module {
 
 val viewModelModule = module {
     viewModel { MainViewModel(get()) }
+    viewModel { CreateNewViewModel() }
+    viewModel { AddPlayerViewModel() }
 }
 
 val appModule =

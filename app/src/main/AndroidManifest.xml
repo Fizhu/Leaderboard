@@ -10,6 +10,8 @@
         android:roundIcon="@mipmap/leaderboard_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Leaderboard">
+        <activity android:name=".ui.addplayer.AddPlayerActivity" />
+        <activity android:name=".ui.createnew.CreateNewActivity" />
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>

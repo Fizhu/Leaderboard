@@ -3,4 +3,12 @@
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Malesuada sem nullam dapibus enim, odio at velit a non. Tristique aliquet faucibus ridiculus fermentum arcu nullam magna.</string>
 
     <string name="label_do_exit">Press one more time to exit</string>
+    <string name="the_is_no_ongoing_leaderboards">There is no ongoing leaderboards</string>
+    <string name="tap_on">Tap on " + " button to add a new leaderboard</string>
+    <string name="ongoing_leaderboards">Ongoing Leaderboards</string>
+    <string name="about">About</string>
+    <string name="history">History</string>
+    <string name="next">Next</string>
+    <string name="enter_game_name">Enter Game Name</string>
+    <string name="tap_avatar_to_change">* Tap avatar to change</string>
 </resources>

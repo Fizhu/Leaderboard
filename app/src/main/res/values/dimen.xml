@@ -2,9 +2,11 @@
 <resources>
     //margin
     <dimen name="margin">16dp</dimen>
-    <dimen name="margin_extra">32dp</dimen>
-    <dimen name="margin_more_extra">48dp</dimen>
-    <dimen name="margin_super">64dp</dimen>
+    <dimen name="margin_24">16dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+    <dimen name="margin_78">78dp</dimen>
 
     //padding
     <dimen name="padding">8dp</dimen>

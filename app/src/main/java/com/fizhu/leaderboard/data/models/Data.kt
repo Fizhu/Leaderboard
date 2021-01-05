@@ -20,7 +20,7 @@ data class Player(
     @Expose @SerializedName("name")
     var name: String? = null,
     @Expose @SerializedName("avatar")
-    var avatar: Int? = null
+    var avatar: String? = null
 )
 
 @Entity(tableName = "game_table")
