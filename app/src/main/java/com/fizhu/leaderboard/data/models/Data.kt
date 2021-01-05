@@ -52,8 +52,8 @@ data class Score(
     @ColumnInfo(name = "id")
     @Expose @SerializedName("id")
     var id: Int? = null,
-    @Expose @SerializedName("player_id")
-    var playerId: Int? = null,
+    @Expose @SerializedName("player_name")
+    var player_name: String? = null,
     @Expose @SerializedName("game_id")
     var gameId: Int? = null,
     @Expose @SerializedName("point")
