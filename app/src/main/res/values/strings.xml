@@ -14,4 +14,6 @@
     <string name="tap_icon_to_change">* Tap icon to change</string>
     <string name="add">Add</string>
     <string name="save">Save</string>
+    <string name="next_round">Next Round</string>
+    <string name="end_game">End Game</string>
 </resources>

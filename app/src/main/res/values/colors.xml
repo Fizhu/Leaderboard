@@ -10,6 +10,7 @@
     <color name="first">#FFB22A</color>
     <color name="second">#B4B4B4</color>
     <color name="third">#B16E52</color>
+    <color name="blacktrans">#80000000</color>
 
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
