@@ -35,7 +35,7 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertScores(listScore: List<Score>)
 
-    @Query("SELECT * FROM player_table WHERE gameId = :gameId LIMIT 1")
+    @Query("SELECT * FROM player_table WHERE gameId = :gameId")
     fun getPlayerByIdGame(gameId: Int): Observable<List<Player>>
 
 }

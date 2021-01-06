@@ -35,7 +35,7 @@ class AddPlayerViewModel : BaseViewModel() {
     fun getListPlayer() = listPlayerTemp
 
     fun addNewPlayer() {
-        listPlayerTemp.add(Player(null, playerName.value, avatar.value))
+        listPlayerTemp.add(Player(null, null, playerName.value, avatar.value))
         listPlayer.postValue(listPlayerTemp)
     }
 

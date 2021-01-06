@@ -18,10 +18,8 @@ import com.fizhu.leaderboard.databinding.ActivityAddScoringBinding
 import com.fizhu.leaderboard.ui.dialog.AvatarDialog
 import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
-import com.fizhu.leaderboard.utils.ext.loge
 import com.fizhu.leaderboard.utils.ext.observe
 import com.fizhu.leaderboard.viewmodels.AddScoringViewModel
-import com.google.gson.GsonBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddScoringActivity : AppCompatActivity() {
@@ -57,9 +55,7 @@ class AddScoringActivity : AppCompatActivity() {
             btnPlus.setOnClickListener { this@AddScoringActivity.viewModel.incrementPoint() }
             btnMinus.setOnClickListener { this@AddScoringActivity.viewModel.decrementPoint() }
             btnNext.setOnClickListener {
-//                this@AddScoringActivity.viewModel.insertPlayersToDb()
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                loge(gson.toJson(this@AddScoringActivity.viewModel.getListPlayer()))
+                this@AddScoringActivity.viewModel.addGameToDb()
             }
         }
         binding.rv.let {

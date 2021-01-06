@@ -1,15 +1,11 @@
 package com.fizhu.leaderboard.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.databinding.ItemListGameBinding
 
@@ -18,7 +14,8 @@ import com.fizhu.leaderboard.databinding.ItemListGameBinding
  * https://github.com/Fizhu
  */
 
-class GameAdapter(private val callBack: (game: Game) -> Unit
+class GameAdapter(
+    private val callBack: (game: Game) -> Unit
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     private val list: MutableList<Game> = mutableListOf()
@@ -67,7 +64,9 @@ class GameAdapter(private val callBack: (game: Game) -> Unit
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
         with(holder.binding) {
-
+            tvDate.text = data.date
+            tvPlayerCount.text = data.playerCount.toString()
+            tvTitle.text = data.name
         }
     }
 
