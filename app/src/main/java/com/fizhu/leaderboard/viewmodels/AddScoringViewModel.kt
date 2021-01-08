@@ -61,7 +61,7 @@ class AddScoringViewModel(
         this.listPlayer.value = listPlayer
     }
 
-    fun getListPlayer(): List<Player> = listPlayer.value ?: emptyList()
+    private fun getListPlayer(): List<Player> = listPlayer.value ?: emptyList()
 
     fun incrementPoint() {
         point += 1
@@ -143,6 +143,7 @@ class AddScoringViewModel(
                 Score(
                     id = null,
                     player_name = it.name,
+                    player_avatar = it.avatar,
                     gameId = game.id,
                     point = 0
                 )

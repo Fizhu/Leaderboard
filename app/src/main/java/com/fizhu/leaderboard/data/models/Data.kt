@@ -29,6 +29,7 @@ data class Player(
 ) : Parcelable
 
 @Entity(tableName = "game_table")
+@Parcelize
 data class Game(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -44,7 +45,7 @@ data class Game(
     var playerCount: Int? = null,
     @Expose @SerializedName("total_round")
     var totalRound: Int? = null
-)
+) : Parcelable
 
 @Entity(tableName = "score_table")
 data class Score(
@@ -54,6 +55,8 @@ data class Score(
     var id: Int? = null,
     @Expose @SerializedName("player_name")
     var player_name: String? = null,
+    @Expose @SerializedName("player_avatar")
+    var player_avatar: String? = null,
     @Expose @SerializedName("game_id")
     var gameId: Int? = null,
     @Expose @SerializedName("point")

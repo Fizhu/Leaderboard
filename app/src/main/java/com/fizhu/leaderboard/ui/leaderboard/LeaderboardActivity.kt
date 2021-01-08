@@ -1,51 +1,41 @@
 package com.fizhu.leaderboard.ui.leaderboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.EdgeEffect
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fizhu.leaderboard.adapters.GameAdapter
-import com.fizhu.leaderboard.databinding.ActivityMainBinding
-import com.fizhu.leaderboard.ui.createnew.CreateNewActivity
+import com.fizhu.leaderboard.adapters.ScoreAdapter
+import com.fizhu.leaderboard.data.models.Game
+import com.fizhu.leaderboard.databinding.ActivityLeaderboardBinding
 import com.fizhu.leaderboard.utils.AppConstants
-import com.fizhu.leaderboard.utils.ext.gone
 import com.fizhu.leaderboard.utils.ext.observe
-import com.fizhu.leaderboard.utils.ext.visible
-import com.fizhu.leaderboard.viewmodels.MainViewModel
+import com.fizhu.leaderboard.viewmodels.LeaderboardViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LeaderboardActivity : AppCompatActivity() {
-    private val viewModel by viewModel<MainViewModel>()
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var gameAdapter: GameAdapter
+    private val viewModel by viewModel<LeaderboardViewModel>()
+    private lateinit var binding: ActivityLeaderboardBinding
+    private lateinit var scoreAdapter: ScoreAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLeaderboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onInit()
     }
 
     private fun onInit() {
-        gameAdapter = GameAdapter {
-
+        intent.getParcelableExtra<Game>("data")?.let {
+            viewModel.setGameData(it)
         }
-        binding.fab.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    CreateNewActivity::class.java
-                )
-            )
-        }
+        scoreAdapter = ScoreAdapter()
         binding.rv.let {
             with(it) {
                 layoutManager =
                     LinearLayoutManager(this@LeaderboardActivity)
                 setHasFixedSize(true)
-                adapter = gameAdapter
+                adapter = scoreAdapter
                 it.edgeEffectFactory = object : RecyclerView.EdgeEffectFactory() {
                     override fun createEdgeEffect(view: RecyclerView, direction: Int): EdgeEffect {
                         return object : EdgeEffect(view.context) {
@@ -68,7 +58,7 @@ class LeaderboardActivity : AppCompatActivity() {
                                     sign * deltaDistance * AppConstants.OVERSCROLL_ROTATION_MAGNITUDE
                                 val translationYDelta =
                                     sign * view.width * deltaDistance * AppConstants.OVERSCROLL_TRANSLATION_MAGNITUDE
-                                view.forEachVisibleHolder { holder: GameAdapter.ViewHolder ->
+                                view.forEachVisibleHolder { holder: ScoreAdapter.ViewHolder ->
                                     holder.rotation.cancel()
                                     holder.translationY.cancel()
                                     holder.itemView.rotation += rotationDelta
@@ -80,7 +70,7 @@ class LeaderboardActivity : AppCompatActivity() {
                                 super.onRelease()
                                 // The finger is lifted. This is when we should start the animations to bring
                                 // the view property values back to their resting states.
-                                view.forEachVisibleHolder { holder: GameAdapter.ViewHolder ->
+                                view.forEachVisibleHolder { holder: ScoreAdapter.ViewHolder ->
                                     holder.rotation.start()
                                     holder.translationY.start()
                                 }
@@ -92,7 +82,7 @@ class LeaderboardActivity : AppCompatActivity() {
                                 // The list has reached the edge on fling.
                                 val translationVelocity =
                                     sign * velocity * AppConstants.FLING_TRANSLATION_MAGNITUDE
-                                view.forEachVisibleHolder { holder: GameAdapter.ViewHolder ->
+                                view.forEachVisibleHolder { holder: ScoreAdapter.ViewHolder ->
                                     holder.translationY
                                         .setStartVelocity(translationVelocity)
                                         .start()
@@ -104,7 +94,7 @@ class LeaderboardActivity : AppCompatActivity() {
 
                 it.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        recyclerView.forEachVisibleHolder { holder: GameAdapter.ViewHolder ->
+                        recyclerView.forEachVisibleHolder { holder: ScoreAdapter.ViewHolder ->
                             holder.rotation
                                 // Update the velocity.
                                 // The velocity is calculated by the vertical scroll offset.
@@ -117,22 +107,16 @@ class LeaderboardActivity : AppCompatActivity() {
 
             }
         }
-        viewModel.getListGame()
         observer()
     }
 
     private fun observer() {
-        observe(viewModel.listGame) {
-            gameAdapter.setData(it)
+        observe(viewModel.game) {
+            viewModel.getListScore(it.id ?: 0)
+            viewModel.setTotalRoumd(it.totalRound ?: 0)
         }
-        observe(viewModel.isExist) {
-            if (it) {
-                binding.layoutNocon.lyNocon.gone()
-                binding.rv.visible()
-            } else {
-                binding.layoutNocon.lyNocon.visible()
-                binding.rv.gone()
-            }
+        observe(viewModel.listScore) {
+            scoreAdapter.setData(it)
         }
     }
 

@@ -38,4 +38,7 @@ interface AppDao {
     @Query("SELECT * FROM player_table WHERE gameId = :gameId")
     fun getPlayerByIdGame(gameId: Int): Observable<List<Player>>
 
+    @Query("SELECT * FROM score_table WHERE gameId = :gameId")
+    fun getScoreByIdGame(gameId: Int): Observable<List<Score>>
+
 }
