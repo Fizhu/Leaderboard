@@ -67,6 +67,7 @@ class GameAdapter(
             tvDate.text = data.date
             tvPlayerCount.text = data.playerCount.toString()
             tvTitle.text = data.name
+            root.setOnClickListener { callBack.invoke(data) }
         }
     }
 

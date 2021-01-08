@@ -1,13 +1,17 @@
 package com.fizhu.leaderboard.ui.leaderboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EdgeEffect
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fizhu.leaderboard.R
 import com.fizhu.leaderboard.adapters.ScoreAdapter
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.databinding.ActivityLeaderboardBinding
+import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
 import com.fizhu.leaderboard.utils.ext.observe
 import com.fizhu.leaderboard.viewmodels.LeaderboardViewModel
@@ -17,17 +21,30 @@ class LeaderboardActivity : AppCompatActivity() {
     private val viewModel by viewModel<LeaderboardViewModel>()
     private lateinit var binding: ActivityLeaderboardBinding
     private lateinit var scoreAdapter: ScoreAdapter
+    private var isMain = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLeaderboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_leaderboard)
+        binding.viewModel = this.viewModel
+        binding.lifecycleOwner = this
         onInit()
     }
 
     private fun onInit() {
         intent.getParcelableExtra<Game>("data")?.let {
             viewModel.setGameData(it)
+        }
+        intent.getBooleanExtra("isMain", false).let {
+            isMain = it
+        }
+        binding.toolbar.setNavigationOnClickListener {
+            if (isMain) {
+                finish()
+            } else {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
         scoreAdapter = ScoreAdapter()
         binding.rv.let {
@@ -125,6 +142,15 @@ class LeaderboardActivity : AppCompatActivity() {
     ) {
         for (i in 0 until childCount) {
             action(getChildViewHolder(getChildAt(i)) as T)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (isMain) {
+            finish()
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }

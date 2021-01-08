@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fizhu.leaderboard.adapters.GameAdapter
 import com.fizhu.leaderboard.databinding.ActivityMainBinding
 import com.fizhu.leaderboard.ui.createnew.CreateNewActivity
+import com.fizhu.leaderboard.ui.leaderboard.LeaderboardActivity
 import com.fizhu.leaderboard.utils.AppConstants
 import com.fizhu.leaderboard.utils.ext.gone
 import com.fizhu.leaderboard.utils.ext.observe
@@ -30,7 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun onInit() {
         gameAdapter = GameAdapter {
-
+            val i = Intent(this, LeaderboardActivity::class.java)
+            i.putExtra("data", it)
+            i.putExtra("isMain", true)
+            startActivity(i)
         }
         binding.fab.setOnClickListener {
             startActivity(

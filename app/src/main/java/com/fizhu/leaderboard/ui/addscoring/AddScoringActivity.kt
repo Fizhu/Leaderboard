@@ -16,7 +16,7 @@ import com.fizhu.leaderboard.data.models.Player
 import com.fizhu.leaderboard.data.raw.RawData
 import com.fizhu.leaderboard.databinding.ActivityAddScoringBinding
 import com.fizhu.leaderboard.ui.dialog.AvatarDialog
-import com.fizhu.leaderboard.ui.main.MainActivity
+import com.fizhu.leaderboard.ui.leaderboard.LeaderboardActivity
 import com.fizhu.leaderboard.utils.AppConstants
 import com.fizhu.leaderboard.utils.ext.observe
 import com.fizhu.leaderboard.viewmodels.AddScoringViewModel
@@ -155,7 +155,9 @@ class AddScoringActivity : AppCompatActivity() {
 
         observe(viewModel.isDone) {
             if (it) {
-                val i = Intent(this, MainActivity::class.java)
+                val i = Intent(this, LeaderboardActivity::class.java)
+                i.putExtra("data", viewModel.game.value)
+                i.putExtra("isMain", false)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(i)
                 finish()

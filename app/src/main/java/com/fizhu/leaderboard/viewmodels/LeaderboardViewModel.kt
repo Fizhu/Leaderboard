@@ -26,7 +26,7 @@ class LeaderboardViewModel(
     }
 
     fun setGameData(game: Game) {
-        this.game.postValue(game)
+        this.game.value = game
     }
 
     fun getListScore(id: Int) {

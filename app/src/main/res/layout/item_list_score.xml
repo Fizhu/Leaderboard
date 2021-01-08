@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_marginStart="@dimen/margin"
-        android:backgroundTint="@color/first"
+        app:cardBackgroundColor="@color/first"
         android:minWidth="36dp"
         app:cardCornerRadius="@dimen/margin_32"
         app:cardElevation="0dp"

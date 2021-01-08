@@ -28,6 +28,7 @@ class AddScoringViewModel(
 
     val name = MutableLiveData<String>()
     val listPlayer = MutableLiveData<List<Player>>()
+    val game = MutableLiveData<Game>()
 
     val icon = MutableLiveData<String>()
     val pointString = MutableLiveData<String>()
@@ -111,6 +112,7 @@ class AddScoringViewModel(
             io = {
                 if (it.isNotEmpty()) {
                     val game = it[0]
+                    this.game.postValue(it[0])
                     insertPlayersToDb(game)
                 } else {
                     loge("failed get lastest game data")

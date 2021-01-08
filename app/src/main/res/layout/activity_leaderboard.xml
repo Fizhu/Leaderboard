@@ -62,12 +62,13 @@
             android:layout_margin="@dimen/margin"
             android:clickable="false"
             android:focusable="false"
-            android:text="Total Round : 100"
+            android:text="@{viewModel.totalRound}"
             android:textAlignment="center"
             android:textAllCaps="false"
             app:backgroundTint="@color/primary"
             app:icon="@drawable/ic_baseline_gamepad_24"
             app:layout_constraintEnd_toStartOf="@+id/fab_next_round"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
