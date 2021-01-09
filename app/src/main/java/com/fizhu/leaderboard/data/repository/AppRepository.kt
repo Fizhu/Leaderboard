@@ -3,6 +3,7 @@ package com.fizhu.leaderboard.data.repository
 import com.fizhu.leaderboard.data.db.LocalDataSource
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.data.models.Player
+import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import io.reactivex.Observable
 
@@ -32,6 +33,9 @@ open class AppRepository constructor(
 
     override fun getScoreByIdGame(gameId: Int): Observable<List<Score>> =
         db.getScoreByIdGame(gameId)
+
+    override fun insertPoints(listPoint: List<Point>) =
+        db.insertPoints(listPoint)
 
 
 }

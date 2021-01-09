@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.data.models.Player
+import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import io.reactivex.Observable
 
@@ -40,5 +41,11 @@ interface AppDao {
 
     @Query("SELECT * FROM score_table WHERE gameId = :gameId")
     fun getScoreByIdGame(gameId: Int): Observable<List<Score>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPoints(listPoint: List<Point>)
+
+    @Query("SELECT * FROM point_table WHERE gameId = :gameId")
+    fun getPointByIdGame(gameId: Int): Observable<List<Point>>
 
 }

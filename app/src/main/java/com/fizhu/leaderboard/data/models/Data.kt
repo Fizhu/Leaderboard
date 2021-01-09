@@ -63,7 +63,16 @@ data class Score(
     var point: Int? = null,
 )
 
+@Entity(tableName = "point_table")
 data class Point(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    @Expose @SerializedName("id")
+    var id: Int? = null,
+    @Expose @SerializedName("game_id")
+    var gameId: Int? = null,
+    @Expose @SerializedName("points")
     var points: Int? = null,
+    @Expose @SerializedName("icon")
     var icon: String? = null
 )

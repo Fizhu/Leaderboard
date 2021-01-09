@@ -2,6 +2,7 @@ package com.fizhu.leaderboard.data.db
 
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.data.models.Player
+import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.utils.ext.doBack
 import com.fizhu.leaderboard.utils.ext.loge
@@ -31,5 +32,7 @@ open class LocalDataSource constructor(
     fun getPlayerByIdGame(gameId: Int) = appDao.getPlayerByIdGame(gameId)
 
     fun getScoreByIdGame(gameId: Int) = appDao.getScoreByIdGame(gameId)
+
+    fun insertPoints(listPoint: List<Point>) = appDao.insertPoints(listPoint)
 
 }

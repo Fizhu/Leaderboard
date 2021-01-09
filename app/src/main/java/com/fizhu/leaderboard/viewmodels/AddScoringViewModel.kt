@@ -64,6 +64,8 @@ class AddScoringViewModel(
 
     private fun getListPlayer(): List<Player> = listPlayer.value ?: emptyList()
 
+    private fun getListPoint(): List<Point> = listPoint.value ?: emptyList()
+
     fun incrementPoint() {
         point += 1
         pointString.value = point.toString()
@@ -75,7 +77,7 @@ class AddScoringViewModel(
     }
 
     fun addNewPoint() {
-        listPointTemp.add(Point(pointString.value?.toInt(), icon.value))
+        listPointTemp.add(Point(null, null, pointString.value?.toInt(), icon.value))
         listPoint.postValue(listPointTemp)
     }
 
@@ -114,6 +116,7 @@ class AddScoringViewModel(
                     val game = it[0]
                     this.game.postValue(it[0])
                     insertPlayersToDb(game)
+                    insertPointsToDb(game)
                 } else {
                     loge("failed get lastest game data")
                 }
@@ -182,6 +185,29 @@ class AddScoringViewModel(
             success = {
                 logi("success insert data to db")
                 getPlayerByGameId(game)
+            },
+            error = { loge("failed insert data to db") }
+        )
+    }
+
+    private fun insertPointsToDb(game: Game) {
+        val list = mutableListOf<Point>()
+        getListPoint().forEach {
+            list.add(
+                Point(
+                    id = null,
+                    gameId = game.id,
+                    points = it.points,
+                    icon = it.icon
+                )
+            )
+        }
+        doBack(
+            action = {
+                repository.insertPoints(list)
+            },
+            success = {
+                logi("success insert data to db")
             },
             error = { loge("failed insert data to db") }
         )
