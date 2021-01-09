@@ -11,6 +11,7 @@ import com.fizhu.leaderboard.R
 import com.fizhu.leaderboard.adapters.ScoreAdapter
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.databinding.ActivityLeaderboardBinding
+import com.fizhu.leaderboard.ui.dialog.PointDialog
 import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
 import com.fizhu.leaderboard.utils.ext.observe
@@ -34,6 +35,7 @@ class LeaderboardActivity : AppCompatActivity() {
     private fun onInit() {
         intent.getParcelableExtra<Game>("data")?.let {
             viewModel.setGameData(it)
+            viewModel.getListPoint(it.id ?: 0)
         }
         intent.getBooleanExtra("isMain", false).let {
             isMain = it
@@ -46,7 +48,7 @@ class LeaderboardActivity : AppCompatActivity() {
                 finish()
             }
         }
-        scoreAdapter = ScoreAdapter()
+        scoreAdapter = ScoreAdapter { showDialogPoint() }
         binding.rv.let {
             with(it) {
                 layoutManager =
@@ -151,6 +153,16 @@ class LeaderboardActivity : AppCompatActivity() {
         } else {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
+        }
+    }
+
+    private fun showDialogPoint() {
+        if (!this.isFinishing) {
+            val dialog = PointDialog(this, callBack = {
+            })
+            dialog.setList(viewModel.listPoint.value ?: emptyList())
+            dialog.setCancelable(true)
+            dialog.show()
         }
     }
 }

@@ -2,6 +2,7 @@ package com.fizhu.leaderboard.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import com.fizhu.leaderboard.data.models.Game
+import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.data.repository.Repository
 import com.fizhu.leaderboard.utils.base.BaseViewModel
@@ -18,6 +19,7 @@ class LeaderboardViewModel(
 ) : BaseViewModel() {
 
     val listScore = MutableLiveData<List<Score>>()
+    val listPoint = MutableLiveData<List<Point>>()
     val game = MutableLiveData<Game>()
     val totalRound = MutableLiveData<String>()
 
@@ -34,6 +36,18 @@ class LeaderboardViewModel(
             io = {
                 if (it.isNotEmpty()) {
                     listScore.postValue(it.sortedByDescending { score -> score.point })
+                }
+            },
+            error = {
+                loge(it.localizedMessage)
+            })
+    }
+
+    fun getListPoint(id: Int) {
+        compositeDisposable.route(repository.getPointByIdGame(id),
+            io = {
+                if (it.isNotEmpty()) {
+                    listPoint.postValue(it)
                 }
             },
             error = {

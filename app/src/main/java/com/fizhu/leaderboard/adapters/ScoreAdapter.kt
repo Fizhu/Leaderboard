@@ -22,7 +22,9 @@ import com.fizhu.leaderboard.utils.ext.visible
  * https://github.com/Fizhu
  */
 
-class ScoreAdapter : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
+class ScoreAdapter(
+    private val callBack: (score: Score) -> Unit
+) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
 
     private val list: MutableList<Score> = mutableListOf()
 
@@ -70,12 +72,9 @@ class ScoreAdapter : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
         with(holder.binding) {
+            cv.setOnClickListener { callBack.invoke(data) }
             tvName.text = data.player_name
             setImage(data.player_avatar ?: "", iv)
-            iv.setOnClickListener {
-                list.remove(data)
-                notifyItemRemoved(position)
-            }
             tvNo.text = "${position + 1}"
             tvPoint.text = data.point.toString()
             if (position == 0) {

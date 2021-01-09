@@ -16,4 +16,5 @@
     <string name="save">Save</string>
     <string name="next_round">Next Round</string>
     <string name="end_game">End Game</string>
+    <string name="select_point">Select Point</string>
 </resources>
