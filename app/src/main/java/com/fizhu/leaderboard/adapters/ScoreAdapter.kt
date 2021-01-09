@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fizhu.leaderboard.R
+import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.databinding.ItemListScoreBinding
 import com.fizhu.leaderboard.utils.ext.gone
@@ -23,10 +24,11 @@ import com.fizhu.leaderboard.utils.ext.visible
  */
 
 class ScoreAdapter(
-    private val callBack: (score: Score) -> Unit
+    private val callBack: (position: Int) -> Unit
 ) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
 
     private val list: MutableList<Score> = mutableListOf()
+    private val listPoint = mutableListOf<Point>()
 
     fun setData(listData: List<Score>) {
         list.clear()
@@ -34,14 +36,28 @@ class ScoreAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(
+    fun clearPoints() {
+        listPoint.clear()
+        repeat(list.size) {
+            listPoint.add(Point())
+        }
+    }
+
+    fun setPoint(point: Point, position: Int) {
+        listPoint[position] = point
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        clearPoints()
+        return ViewHolder(
             ItemListScoreBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             ).root
         )
+    }
 
     override fun getItemCount(): Int = list.size
 
@@ -72,7 +88,24 @@ class ScoreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
         with(holder.binding) {
-            cv.setOnClickListener { callBack.invoke(data) }
+            if (listPoint[position].icon != null) {
+                loge("ada")
+                ivPoint.visible()
+                Glide.with(iv.context)
+                    .asBitmap()
+                    .load(
+                        iv.context.resources.getIdentifier(
+                            listPoint[position].icon,
+                            "drawable",
+                            iv.context.packageName
+                        )
+                    )
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .into(ivPoint)
+            } else {
+                ivPoint.gone()
+            }
+            cv.setOnClickListener { callBack.invoke(position) }
             tvName.text = data.player_name
             setImage(data.player_avatar ?: "", iv)
             tvNo.text = "${position + 1}"

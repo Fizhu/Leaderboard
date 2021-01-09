@@ -12,6 +12,7 @@ import com.fizhu.leaderboard.adapters.ScoreAdapter
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.databinding.ActivityLeaderboardBinding
 import com.fizhu.leaderboard.ui.dialog.PointDialog
+import com.fizhu.leaderboard.ui.dialog.RoundDialog
 import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
 import com.fizhu.leaderboard.utils.ext.observe
@@ -48,7 +49,11 @@ class LeaderboardActivity : AppCompatActivity() {
                 finish()
             }
         }
-        scoreAdapter = ScoreAdapter { showDialogPoint() }
+        binding.fabNextRound.setOnClickListener {
+            showDialogRound()
+        }
+        scoreAdapter = ScoreAdapter { showDialogPoint(it) }
+        scoreAdapter.clearPoints()
         binding.rv.let {
             with(it) {
                 layoutManager =
@@ -156,11 +161,23 @@ class LeaderboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun showDialogPoint() {
+    private fun showDialogPoint(position: Int) {
         if (!this.isFinishing) {
             val dialog = PointDialog(this, callBack = {
+                scoreAdapter.setPoint(it, position)
             })
             dialog.setList(viewModel.listPoint.value ?: emptyList())
+            dialog.setCancelable(true)
+            dialog.show()
+        }
+    }
+
+    private fun showDialogRound() {
+        if (!this.isFinishing) {
+            val dialog = RoundDialog(this, callBack = {
+                scoreAdapter.clearPoints()
+                scoreAdapter.notifyDataSetChanged()
+            })
             dialog.setCancelable(true)
             dialog.show()
         }

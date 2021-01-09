@@ -17,4 +17,7 @@
     <string name="next_round">Next Round</string>
     <string name="end_game">End Game</string>
     <string name="select_point">Select Point</string>
+    <string name="go_to_next_round">Go To Next Round</string>
+    <string name="no_cancel">No, Cancel</string>
+    <string name="yes_go_ahead">Yes, Go Ahead</string>
 </resources>
