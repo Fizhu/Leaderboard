@@ -22,4 +22,5 @@ interface Repository {
     fun insertPoints(listPoint: List<Point>)
     fun getPointByIdGame(gameId: Int): Observable<List<Point>>
     fun updateScore(listScore: List<Score>)
+    fun updateGame(game: Game)
 }

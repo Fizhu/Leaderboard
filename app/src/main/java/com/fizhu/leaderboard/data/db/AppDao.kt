@@ -48,4 +48,7 @@ interface AppDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateScore(listScore: List<Score>)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateGame(game: Game)
+
 }

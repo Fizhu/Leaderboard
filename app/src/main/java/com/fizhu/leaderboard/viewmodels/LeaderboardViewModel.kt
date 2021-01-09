@@ -24,8 +24,10 @@ class LeaderboardViewModel(
     val listPoint = MutableLiveData<List<Point>>()
     val game = MutableLiveData<Game>()
     val totalRound = MutableLiveData<String>()
+    private var totalRoundTemp = 0
 
     fun setTotalRoumd(totalRound: Int) {
+        totalRoundTemp = totalRound
         this.totalRound.value = "Total Round : $totalRound"
     }
 
@@ -57,9 +59,9 @@ class LeaderboardViewModel(
             })
     }
 
-    fun getGameById(id: Int) {
+    private fun getGameById(id: Int) {
         compositeDisposable.route(repository.getGameById(id),
-            io = {
+            main = {
                 if (it.isNotEmpty()) {
                     setGameData(it[0])
                 }
@@ -89,6 +91,27 @@ class LeaderboardViewModel(
         doBack(
             action = {
                 repository.updateScore(list)
+            },
+            success = {
+                logi("success insert data to db")
+                updateGameRound()
+            },
+            error = { loge("failed insert data to db") }
+        )
+    }
+
+    private fun updateGameRound() {
+        val g = Game(
+            id = game.value?.id,
+            name = game.value?.name,
+            date = game.value?.date,
+            status = game.value?.status,
+            playerCount = game.value?.playerCount,
+            totalRound = totalRoundTemp.plus(1)
+        )
+        doBack(
+            action = {
+                repository.updateGame(g)
             },
             success = {
                 logi("success insert data to db")

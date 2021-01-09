@@ -39,4 +39,6 @@ open class LocalDataSource constructor(
 
     fun updateScore(listScore: List<Score>) = appDao.updateScore(listScore)
 
+    fun updateGame(game: Game) = appDao.updateGame(game)
+
 }

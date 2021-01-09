@@ -42,4 +42,6 @@ open class AppRepository constructor(
 
     override fun updateScore(listScore: List<Score>) = db.updateScore(listScore)
 
+    override fun updateGame(game: Game) = db.updateGame(game)
+
 }
