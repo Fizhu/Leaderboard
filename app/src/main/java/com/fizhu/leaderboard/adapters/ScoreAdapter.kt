@@ -28,11 +28,12 @@ class ScoreAdapter(
 ) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
 
     private val list: MutableList<Score> = mutableListOf()
-    private val listPoint = mutableListOf<Point>()
+    val listPoint = mutableListOf<Point>()
 
     fun setData(listData: List<Score>) {
         list.clear()
         list.addAll(listData)
+        clearPoints()
         notifyDataSetChanged()
     }
 

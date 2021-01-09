@@ -175,8 +175,7 @@ class LeaderboardActivity : AppCompatActivity() {
     private fun showDialogRound() {
         if (!this.isFinishing) {
             val dialog = RoundDialog(this, callBack = {
-                scoreAdapter.clearPoints()
-                scoreAdapter.notifyDataSetChanged()
+                viewModel.updateScore(scoreAdapter.listPoint)
             })
             dialog.setCancelable(true)
             dialog.show()

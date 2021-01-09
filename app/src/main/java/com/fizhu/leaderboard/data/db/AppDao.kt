@@ -1,9 +1,6 @@
 package com.fizhu.leaderboard.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.data.models.Player
 import com.fizhu.leaderboard.data.models.Point
@@ -47,5 +44,8 @@ interface AppDao {
 
     @Query("SELECT * FROM point_table WHERE gameId = :gameId")
     fun getPointByIdGame(gameId: Int): Observable<List<Point>>
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateScore(listScore: List<Score>)
 
 }

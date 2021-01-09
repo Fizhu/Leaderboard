@@ -6,7 +6,9 @@ import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.data.repository.Repository
 import com.fizhu.leaderboard.utils.base.BaseViewModel
+import com.fizhu.leaderboard.utils.ext.doBack
 import com.fizhu.leaderboard.utils.ext.loge
+import com.fizhu.leaderboard.utils.ext.logi
 import com.fizhu.leaderboard.utils.ext.route
 
 /**
@@ -65,6 +67,35 @@ class LeaderboardViewModel(
             error = {
                 loge(it.localizedMessage)
             })
+    }
+
+    private fun getListScore() = listScore.value ?: emptyList()
+
+    fun updateScore(listPoint: List<Point>) {
+        val list = mutableListOf<Score>()
+        getListScore().forEachIndexed { index, score ->
+            listPoint[index].points?.let { p ->
+                list.add(
+                    Score(
+                        id = score.id,
+                        player_name = score.player_name,
+                        player_avatar = score.player_avatar,
+                        gameId = score.gameId,
+                        point = score.point?.plus(p)
+                    )
+                )
+            }
+        }
+        doBack(
+            action = {
+                repository.updateScore(list)
+            },
+            success = {
+                logi("success insert data to db")
+                getGameById(game.value?.id ?: 0)
+            },
+            error = { loge("failed insert data to db") }
+        )
     }
 
 }
