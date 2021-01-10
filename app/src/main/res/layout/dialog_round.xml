@@ -23,6 +23,7 @@
             android:padding="@dimen/margin">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/primary"
@@ -31,6 +32,7 @@
                 android:text="@string/go_to_next_round" />
 
             <TextView
+                android:id="@+id/tv_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/primary_text"

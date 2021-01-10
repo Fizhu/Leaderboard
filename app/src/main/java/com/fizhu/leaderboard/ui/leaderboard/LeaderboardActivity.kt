@@ -52,6 +52,14 @@ class LeaderboardActivity : AppCompatActivity() {
         binding.fabNextRound.setOnClickListener {
             showDialogRound()
         }
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.end) {
+                showDialogEnd()
+                true
+            } else {
+                false
+            }
+        }
         scoreAdapter = ScoreAdapter { showDialogPoint(it) }
         scoreAdapter.clearPoints()
         binding.rv.let {
@@ -177,6 +185,18 @@ class LeaderboardActivity : AppCompatActivity() {
             val dialog = RoundDialog(this, callBack = {
                 viewModel.updateScore(scoreAdapter.listPoint)
             })
+            dialog.setCancelable(true)
+            dialog.show()
+        }
+    }
+
+    private fun showDialogEnd() {
+        if (!this.isFinishing) {
+            val dialog = RoundDialog(this, callBack = {
+
+            })
+            dialog.setTitle("End the game")
+            dialog.setDesc("Are you sure want to end this game?")
             dialog.setCancelable(true)
             dialog.show()
         }

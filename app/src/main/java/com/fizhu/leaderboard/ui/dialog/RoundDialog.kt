@@ -18,6 +18,9 @@ class RoundDialog(
     private val callBack: () -> Unit
 ) : Dialog(activity) {
 
+    private var title: String? = null
+    private var desc: String? = null
+
     private lateinit var binding: DialogRoundBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +44,22 @@ class RoundDialog(
                 callBack.invoke()
                 this@RoundDialog.dismiss()
             }
+            this@RoundDialog.title?.let {
+                title.text = it
+            }
+
+            this@RoundDialog.desc?.let {
+                tvDesc.text = it
+            }
         }
+    }
+
+    fun setTitle(title: String?) {
+        this.title = title
+    }
+
+    fun setDesc(desc: String?) {
+        this.desc = desc
     }
 
     override fun onBackPressed() {

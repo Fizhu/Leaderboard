@@ -6,10 +6,7 @@ import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
 import com.fizhu.leaderboard.data.repository.Repository
 import com.fizhu.leaderboard.utils.base.BaseViewModel
-import com.fizhu.leaderboard.utils.ext.doBack
-import com.fizhu.leaderboard.utils.ext.loge
-import com.fizhu.leaderboard.utils.ext.logi
-import com.fizhu.leaderboard.utils.ext.route
+import com.fizhu.leaderboard.utils.ext.*
 
 /**
  * Created by fizhu on 07,July,2020
@@ -116,6 +113,27 @@ class LeaderboardViewModel(
             success = {
                 logi("success insert data to db")
                 getGameById(game.value?.id ?: 0)
+            },
+            error = { loge("failed insert data to db") }
+        )
+    }
+
+    private fun updateGameStatus(success: () -> Unit) {
+        val g = Game(
+            id = game.value?.id,
+            name = game.value?.name,
+            date = game.value?.date,
+            status = true,
+            playerCount = game.value?.playerCount,
+            totalRound = totalRoundTemp
+        )
+        doUi (
+            action = {
+                repository.updateGame(g)
+            },
+            success = {
+                logi("success insert data to db")
+                success.invoke()
             },
             error = { loge("failed insert data to db") }
         )
