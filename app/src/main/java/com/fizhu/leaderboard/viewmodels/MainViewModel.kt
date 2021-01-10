@@ -29,7 +29,7 @@ class MainViewModel(
             io = {
                 if (it.isNotEmpty()) {
                     _isExist.postValue(true)
-                    listGame.postValue(it)
+                    listGame.postValue(it.filter { game -> game.status == false }.sortedByDescending { game -> game.date })
                 } else {
                     _isExist.postValue(false)
                 }
