@@ -26,6 +26,7 @@ class CreateNewActivity : AppCompatActivity() {
     private fun onInit() {
         with(binding) {
             toolbar.setNavigationOnClickListener { finish() }
+            toolbar.navigationIcon
             btnNext.setOnClickListener {
                 if (this@CreateNewActivity.viewModel.getName() != "") {
                     tilName.isErrorEnabled = false

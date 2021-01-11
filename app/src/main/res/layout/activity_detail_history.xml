@@ -25,18 +25,27 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/blacktrans"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:expanded="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/menu_leaderboard"
+                app:layout_scrollFlags="scroll|snap"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                app:title="@{viewModel.game.name}"
+                app:titleTextColor="@color/md_white_1000" />
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/blacktrans"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:titleEnabled="false">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -46,16 +55,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_collapseMode="pin"
-                    app:menu="@menu/menu_leaderboard"
-                    app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                    app:title="@{viewModel.game.name}"
-                    app:titleTextColor="@color/md_white_1000" />
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -63,7 +62,7 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -108,8 +107,7 @@
                     android:clipToPadding="false"
                     android:paddingBottom="@dimen/margin"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fab_total_round"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/fab_total_round" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
