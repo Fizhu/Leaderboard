@@ -44,6 +44,9 @@ class AddPlayerActivity : AppCompatActivity() {
         playerAdapter = PlayerAdapter {
             viewModel.removePlayer(it)
         }
+        Glide.with(this)
+            .load(R.drawable.animal48)
+            .into(binding.iv)
         with(binding) {
             toolbar.setNavigationOnClickListener { finish() }
             iv.setOnClickListener { showDialog() }

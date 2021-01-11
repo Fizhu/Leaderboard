@@ -111,6 +111,9 @@ class ScoreAdapter(
             setImage(data.player_avatar ?: "", iv)
             tvNo.text = "${position + 1}"
             tvPoint.text = data.point.toString()
+            Glide.with(root.context)
+                .load(R.drawable.golden_crown)
+                .into(ivCrown)
             if (position == 0) {
                 ivCrown.visible()
             } else {
@@ -118,26 +121,16 @@ class ScoreAdapter(
             }
             when (position) {
                 0 -> {
-                    cvNo.setCardBackgroundColor(ContextCompat.getColor(root.context, R.color.first))
+                    cvNo.setBackgroundResource(R.drawable.bg_first)
                 }
                 1 -> {
-                    cvNo.setCardBackgroundColor(
-                        ContextCompat.getColor(
-                            root.context,
-                            R.color.second
-                        )
-                    )
+                    cvNo.setBackgroundResource(R.drawable.bg_second)
                 }
                 2 -> {
-                    cvNo.setCardBackgroundColor(ContextCompat.getColor(root.context, R.color.third))
+                    cvNo.setBackgroundResource(R.drawable.bg_third)
                 }
                 else -> {
-                    cvNo.setCardBackgroundColor(
-                        ContextCompat.getColor(
-                            root.context,
-                            R.color.primary
-                        )
-                    )
+                    cvNo.setBackgroundResource(R.drawable.bg_other)
                 }
             }
         }

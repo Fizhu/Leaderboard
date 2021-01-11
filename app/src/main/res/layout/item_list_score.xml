@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv"
@@ -59,15 +60,13 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <RelativeLayout
         android:id="@+id/cv_no"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_marginStart="@dimen/margin"
         android:minWidth="36dp"
-        app:cardBackgroundColor="@color/first"
-        app:cardCornerRadius="@dimen/margin_32"
-        app:cardElevation="0dp"
+        android:background="@drawable/bg_first"
         app:layout_constraintBottom_toBottomOf="@+id/cv"
         app:layout_constraintStart_toStartOf="@+id/cv"
         app:layout_constraintTop_toTopOf="@+id/cv">
@@ -78,11 +77,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:layout_margin="@dimen/padding"
             android:text="10"
             android:textColor="@color/md_white_1000" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/iv"
@@ -94,7 +94,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:elevation="@dimen/padding"
-        android:src="@drawable/animal49"
+        tools:src="@drawable/animal49"
         app:layout_constraintBottom_toBottomOf="@+id/cv"
         app:layout_constraintStart_toEndOf="@+id/cv_no"
         app:layout_constraintTop_toTopOf="parent"
@@ -109,7 +109,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:elevation="@dimen/padding"
-        android:src="@drawable/golden_crown"
+        tools:src="@drawable/golden_crown"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iv"
         app:layout_constraintStart_toStartOf="@+id/iv" />
@@ -122,7 +122,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:elevation="@dimen/padding"
-        android:src="@drawable/object15"
+        tools:src="@drawable/object15"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv" />

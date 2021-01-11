@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/padding"
     app:strokeColor="@color/divider"
     app:strokeWidth="1dp"
@@ -29,7 +30,7 @@
             android:layout_width="@dimen/margin_48"
             android:layout_height="@dimen/margin_48"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/object51"
+            tools:src="@drawable/object51"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_remove" />

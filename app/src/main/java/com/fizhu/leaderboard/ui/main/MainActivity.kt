@@ -6,6 +6,8 @@ import android.widget.EdgeEffect
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.fizhu.leaderboard.R
 import com.fizhu.leaderboard.adapters.GameAdapter
 import com.fizhu.leaderboard.databinding.ActivityMainBinding
 import com.fizhu.leaderboard.ui.createnew.CreateNewActivity
@@ -44,6 +46,9 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        Glide.with(this)
+            .load(R.drawable.undraw_children_4rtb)
+            .into(binding.layoutNocon.iv)
         binding.rv.let {
             with(it) {
                 layoutManager =

@@ -87,7 +87,6 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:elevation="@dimen/padding"
-            android:src="@drawable/animal48"
             app:layout_constraintBottom_toTopOf="@+id/tv_desc"
             app:layout_constraintStart_toStartOf="parent" />
 

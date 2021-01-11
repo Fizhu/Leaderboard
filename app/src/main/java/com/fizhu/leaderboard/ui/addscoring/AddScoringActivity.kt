@@ -58,6 +58,9 @@ class AddScoringActivity : AppCompatActivity() {
                 this@AddScoringActivity.viewModel.addGameToDb()
             }
         }
+        Glide.with(this)
+            .load(R.drawable.object51)
+            .into(binding.iv)
         binding.rv.let {
             with(it) {
                 layoutManager =
