@@ -147,6 +147,7 @@ class AddScoringViewModel(
             list.add(
                 Score(
                     id = null,
+                    player_id = it.id,
                     player_name = it.name,
                     player_avatar = it.avatar,
                     gameId = game.id,

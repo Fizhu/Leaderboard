@@ -1,10 +1,7 @@
 package com.fizhu.leaderboard.data.repository
 
 import com.fizhu.leaderboard.data.db.LocalDataSource
-import com.fizhu.leaderboard.data.models.Game
-import com.fizhu.leaderboard.data.models.Player
-import com.fizhu.leaderboard.data.models.Point
-import com.fizhu.leaderboard.data.models.Score
+import com.fizhu.leaderboard.data.models.*
 import io.reactivex.Observable
 
 /**
@@ -43,5 +40,10 @@ open class AppRepository constructor(
     override fun updateScore(listScore: List<Score>) = db.updateScore(listScore)
 
     override fun updateGame(game: Game) = db.updateGame(game)
+
+    override fun insertScoreLog(listPoint: List<ScoreLog>) = db.insertScoreLog(listPoint)
+
+    override fun getScoreLogByIdPlayer(id: Int): Observable<List<PlayerWithScoreLog>> =
+        db.getScoreLogByIdPlayer(id)
 
 }

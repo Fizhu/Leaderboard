@@ -1,12 +1,18 @@
 package com.fizhu.leaderboard.viewmodels
 
 import androidx.lifecycle.MutableLiveData
+import com.fizhu.leaderboard.R
 import com.fizhu.leaderboard.data.models.Game
 import com.fizhu.leaderboard.data.models.Point
 import com.fizhu.leaderboard.data.models.Score
+import com.fizhu.leaderboard.data.models.ScoreLog
 import com.fizhu.leaderboard.data.repository.Repository
 import com.fizhu.leaderboard.utils.base.BaseViewModel
 import com.fizhu.leaderboard.utils.ext.*
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.utils.ColorTemplate
 
 /**
  * Created by fizhu on 07,July,2020
@@ -19,6 +25,8 @@ class LeaderboardViewModel(
 
     val listScore = MutableLiveData<List<Score>>()
     val listPoint = MutableLiveData<List<Point>>()
+    val chartDataSets = MutableLiveData<ArrayList<ILineDataSet>>()
+    val chartDataSetsTemp = mutableListOf<ILineDataSet>()
     val game = MutableLiveData<Game>()
     val totalRound = MutableLiveData<String>()
     private var totalRoundTemp = 0
@@ -127,7 +135,7 @@ class LeaderboardViewModel(
             playerCount = game.value?.playerCount,
             totalRound = totalRoundTemp
         )
-        doUi (
+        doUi(
             action = {
                 repository.updateGame(g)
             },
@@ -137,6 +145,75 @@ class LeaderboardViewModel(
             },
             error = { loge("failed insert data to db") }
         )
+    }
+
+    fun insertScoreLog(game: Game) {
+        val list = mutableListOf<ScoreLog>()
+        listScore.value?.forEach {
+            list.add(
+                ScoreLog(
+                    id = null,
+                    playerId = it.player_id,
+                    round = game.totalRound,
+                    score = it.point
+                )
+            )
+        }
+        doBack(
+            action = {
+                repository.insertScoreLog(list)
+            },
+            success = {
+                logi("success insert data to db")
+                listScore.value?.forEach {
+                    it.player_id?.let { id ->
+                        getScoreLog(id)
+                    }
+                }
+            },
+            error = {
+                loge("failed insert data to db")
+            }
+        )
+    }
+
+    private fun getScoreLog(id: Int) {
+        compositeDisposable.route(repository.getScoreLogByIdPlayer(id),
+            main = {
+                if (it.isNotEmpty()) {
+                    loge("BEHASIL GET LOG")
+                    val dataSets = ArrayList<ILineDataSet>()
+                    it.forEach { playerWithScoreLog ->
+                        val values = ArrayList<Entry>()
+                        playerWithScoreLog.listScoreLog.forEach { scoreLog ->
+                            val round = scoreLog.round ?: 0
+                            val score = scoreLog.score ?: 0
+                            values.add(Entry(round.toFloat(), score.toFloat()))
+                        }
+                        val d = LineDataSet(values, playerWithScoreLog.player.name)
+                        d.lineWidth = 2f
+                        d.circleRadius = 2f
+                        val color: Int = getRandomColor()
+                        d.color = color
+                        d.setCircleColor(d.color)
+                        d.valueTextColor = R.color.md_white_1000
+                        dataSets.add(d)
+                    }
+                    chartDataSetsTemp.addAll(dataSets)
+                    chartDataSets.postValue(ArrayList(chartDataSetsTemp))
+                }
+            },
+            error = {
+                loge(it.localizedMessage)
+            })
+    }
+
+    private fun getRandomColor(): Int {
+        val colors = mutableListOf<Int>()
+        colors.addAll(ColorTemplate.JOYFUL_COLORS.toList())
+        colors.addAll(ColorTemplate.LIBERTY_COLORS.toList())
+        colors.addAll(ColorTemplate.VORDIPLOM_COLORS.toList())
+        return colors.random()
     }
 
 }

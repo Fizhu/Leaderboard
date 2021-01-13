@@ -16,17 +16,13 @@ import com.fizhu.leaderboard.ui.dialog.PointDialog
 import com.fizhu.leaderboard.ui.dialog.RoundDialog
 import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
+import com.fizhu.leaderboard.utils.ext.loge
 import com.fizhu.leaderboard.utils.ext.observe
 import com.fizhu.leaderboard.viewmodels.LeaderboardViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 class LeaderboardActivity : AppCompatActivity() {
     private val viewModel by viewModel<LeaderboardViewModel>()
@@ -148,17 +144,24 @@ class LeaderboardActivity : AppCompatActivity() {
 
             }
         }
-        observer()
         setChart()
+        observer()
     }
 
     private fun observer() {
         observe(viewModel.game) {
             viewModel.getListScore(it.id ?: 0)
             viewModel.setTotalRoumd(it.totalRound ?: 0)
+            viewModel.chartDataSetsTemp.clear()
+            viewModel.insertScoreLog(it)
         }
         observe(viewModel.listScore) {
             scoreAdapter.setData(it)
+        }
+        observe(viewModel.chartDataSets) {
+            val data = LineData(it)
+            binding.chart.data = data
+            binding.chart.invalidate()
         }
     }
 
@@ -213,58 +216,32 @@ class LeaderboardActivity : AppCompatActivity() {
     }
 
     private fun setChart() {
-        binding.chart.setDrawGridBackground(false)
-        binding.chart.getDescription().setEnabled(false)
-        binding.chart.setDrawBorders(false)
-        binding.chart.getAxisLeft().setEnabled(true)
-        binding.chart.getAxisLeft().textColor = ContextCompat.getColor(this, R.color.md_white_1000)
-        binding.chart.getAxisRight().setEnabled(false)
-        binding.chart.getXAxis().setDrawAxisLine(true)
-        binding.chart.getXAxis().setDrawGridLines(true)
-        binding.chart.getXAxis().position = XAxis.XAxisPosition.BOTTOM
-        binding.chart.getXAxis().granularity = 1f
-        binding.chart.getXAxis().textColor = ContextCompat.getColor(this, R.color.md_white_1000)
-        binding.chart.setTouchEnabled(true)
-        binding.chart.setDragEnabled(true)
-        binding.chart.setScaleEnabled(true)
-        binding.chart.setPinchZoom(false)
+        with(binding.chart) {
+            setDrawGridBackground(false)
+            description.isEnabled = false
+            setDrawBorders(false)
+            axisLeft.isEnabled = true
+            axisLeft.textColor =
+                ContextCompat.getColor(this@LeaderboardActivity, R.color.md_white_1000)
+            axisRight.isEnabled = false
+            xAxis.setDrawAxisLine(true)
+            xAxis.setDrawGridLines(true)
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.granularity = 1f
+            xAxis.textColor =
+                ContextCompat.getColor(this@LeaderboardActivity, R.color.md_white_1000)
+            setTouchEnabled(true)
+            isDragEnabled = true
+            setScaleEnabled(true)
+            setPinchZoom(false)
 
-        val l: Legend = binding.chart.getLegend()
-        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        l.orientation = Legend.LegendOrientation.HORIZONTAL
-        l.textColor = ContextCompat.getColor(this, R.color.md_white_1000)
-        l.setDrawInside(false)
-
-        val dataSets = ArrayList<ILineDataSet>()
-
-        repeat(4) {
-            val values = ArrayList<Entry>()
-            repeat(10) { round ->
-                values.add(Entry(round.toFloat(), ((1..4).random().toFloat() + round)))
-            }
-            val d = LineDataSet(values, "Player $it")
-            d.lineWidth = 2f
-            d.circleRadius = 2f
-            val color: Int = getRandomColor()
-            d.color = color
-            d.setCircleColor(d.color)
-            d.valueTextColor = ContextCompat.getColor(this, R.color.md_white_1000)
-            dataSets.add(d)
+            val l: Legend = legend
+            l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            l.orientation = Legend.LegendOrientation.HORIZONTAL
+            l.textColor = ContextCompat.getColor(this@LeaderboardActivity, R.color.md_white_1000)
+            l.setDrawInside(false)
         }
-
-        val data = LineData(dataSets)
-        binding.chart.setData(data)
-        binding.chart.invalidate()
-
-    }
-
-    private fun getRandomColor(): Int {
-        val colors = mutableListOf<Int>()
-        colors.addAll(ColorTemplate.JOYFUL_COLORS.toList())
-        colors.addAll(ColorTemplate.LIBERTY_COLORS.toList())
-        colors.addAll(ColorTemplate.VORDIPLOM_COLORS.toList())
-        return colors.random()
     }
 
 }

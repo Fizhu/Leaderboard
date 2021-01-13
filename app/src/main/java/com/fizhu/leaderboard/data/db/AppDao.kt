@@ -1,10 +1,7 @@
 package com.fizhu.leaderboard.data.db
 
 import androidx.room.*
-import com.fizhu.leaderboard.data.models.Game
-import com.fizhu.leaderboard.data.models.Player
-import com.fizhu.leaderboard.data.models.Point
-import com.fizhu.leaderboard.data.models.Score
+import com.fizhu.leaderboard.data.models.*
 import io.reactivex.Observable
 
 /**
@@ -40,7 +37,7 @@ interface AppDao {
     fun getScoreByIdGame(gameId: Int): Observable<List<Score>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPoints(listPoint: List<Point>)
+    fun insertScoreLog(listPoint: List<ScoreLog>)
 
     @Query("SELECT * FROM point_table WHERE gameId = :gameId")
     fun getPointByIdGame(gameId: Int): Observable<List<Point>>
@@ -50,5 +47,12 @@ interface AppDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateGame(game: Game)
+
+    @Transaction
+    @Query("SELECT * FROM player_table WHERE id = :id")
+    fun getScoreLogByIdPlayer(id: Int): Observable<List<PlayerWithScoreLog>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPoints(listPoint: List<Point>)
 
 }

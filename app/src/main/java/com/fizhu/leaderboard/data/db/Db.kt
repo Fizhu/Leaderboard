@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.fizhu.leaderboard.data.models.Game
-import com.fizhu.leaderboard.data.models.Player
-import com.fizhu.leaderboard.data.models.Point
-import com.fizhu.leaderboard.data.models.Score
+import com.fizhu.leaderboard.data.models.*
 
 
 /**
@@ -15,7 +12,7 @@ import com.fizhu.leaderboard.data.models.Score
  * https://github.com/Fizhu
  */
 @Database(
-    entities = [Player::class, Game::class, Score::class, Point::class],
+    entities = [Player::class, Game::class, Score::class, Point::class, ScoreLog::class],
     version = 1, exportSchema = false
 )
 abstract class Db : RoomDatabase() {

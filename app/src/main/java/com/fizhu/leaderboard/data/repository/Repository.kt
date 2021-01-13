@@ -1,9 +1,6 @@
 package com.fizhu.leaderboard.data.repository
 
-import com.fizhu.leaderboard.data.models.Game
-import com.fizhu.leaderboard.data.models.Player
-import com.fizhu.leaderboard.data.models.Point
-import com.fizhu.leaderboard.data.models.Score
+import com.fizhu.leaderboard.data.models.*
 import io.reactivex.Observable
 
 /**
@@ -23,4 +20,6 @@ interface Repository {
     fun getPointByIdGame(gameId: Int): Observable<List<Point>>
     fun updateScore(listScore: List<Score>)
     fun updateGame(game: Game)
+    fun getScoreLogByIdPlayer(id: Int): Observable<List<PlayerWithScoreLog>>
+    fun insertScoreLog(listPoint: List<ScoreLog>)
 }

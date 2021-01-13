@@ -33,6 +33,7 @@ fun doBack( success: (() -> Unit)? = null, error: (() -> Unit)? = null,action: (
         .subscribe({
             success?.invoke()
         }, {
+            loge(it.localizedMessage)
             error?.invoke()
         })
 }
@@ -43,6 +44,7 @@ fun doUi( success: (() -> Unit)? = null, error: (() -> Unit)? = null,action: () 
         .subscribe({
             success?.invoke()
         }, {
+            loge(it.localizedMessage)
             error?.invoke()
         })
 }
