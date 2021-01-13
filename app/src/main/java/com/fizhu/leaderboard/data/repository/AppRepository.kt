@@ -43,7 +43,4 @@ open class AppRepository constructor(
 
     override fun insertScoreLog(listPoint: List<ScoreLog>) = db.insertScoreLog(listPoint)
 
-    override fun getScoreLogByIdPlayer(id: Int): Observable<List<PlayerWithScoreLog>> =
-        db.getScoreLogByIdPlayer(id)
-
 }

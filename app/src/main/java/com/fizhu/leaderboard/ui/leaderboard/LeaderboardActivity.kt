@@ -16,7 +16,6 @@ import com.fizhu.leaderboard.ui.dialog.PointDialog
 import com.fizhu.leaderboard.ui.dialog.RoundDialog
 import com.fizhu.leaderboard.ui.main.MainActivity
 import com.fizhu.leaderboard.utils.AppConstants
-import com.fizhu.leaderboard.utils.ext.loge
 import com.fizhu.leaderboard.utils.ext.observe
 import com.fizhu.leaderboard.viewmodels.LeaderboardViewModel
 import com.github.mikephil.charting.components.Legend
@@ -152,8 +151,6 @@ class LeaderboardActivity : AppCompatActivity() {
         observe(viewModel.game) {
             viewModel.getListScore(it.id ?: 0)
             viewModel.setTotalRoumd(it.totalRound ?: 0)
-            viewModel.chartDataSetsTemp.clear()
-            viewModel.insertScoreLog(it)
         }
         observe(viewModel.listScore) {
             scoreAdapter.setData(it)

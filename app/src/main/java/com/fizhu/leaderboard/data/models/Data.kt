@@ -85,17 +85,10 @@ data class ScoreLog(
     var id: Int? = null,
     @Expose @SerializedName("player_id")
     var playerId: Int? = null,
+    @Expose @SerializedName("game_id")
+    var gameId: Int? = null,
     @Expose @SerializedName("round")
     var round: Int? = null,
     @Expose @SerializedName("score")
     var score: Int? = null
-)
-
-data class PlayerWithScoreLog(
-    @Embedded val player: Player,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "playerId"
-    )
-    val listScoreLog: List<ScoreLog>
 )

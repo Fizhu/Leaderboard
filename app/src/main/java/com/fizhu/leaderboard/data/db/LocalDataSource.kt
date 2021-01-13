@@ -38,8 +38,6 @@ open class LocalDataSource constructor(
 
     fun updateGame(game: Game) = appDao.updateGame(game)
 
-    fun getScoreLogByIdPlayer(id: Int) = appDao.getScoreLogByIdPlayer(id)
-
     fun insertScoreLog(listPoint: List<ScoreLog>) = appDao.insertScoreLog(listPoint)
 
 }

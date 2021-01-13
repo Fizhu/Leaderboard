@@ -48,10 +48,6 @@ interface AppDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateGame(game: Game)
 
-    @Transaction
-    @Query("SELECT * FROM player_table WHERE id = :id")
-    fun getScoreLogByIdPlayer(id: Int): Observable<List<PlayerWithScoreLog>>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPoints(listPoint: List<Point>)
 

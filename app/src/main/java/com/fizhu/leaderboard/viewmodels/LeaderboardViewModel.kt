@@ -147,14 +147,14 @@ class LeaderboardViewModel(
         )
     }
 
-    fun insertScoreLog(game: Game) {
+    fun insertScoreLog() {
         val list = mutableListOf<ScoreLog>()
-        listScore.value?.forEach {
+        getListScore().forEach {
             list.add(
                 ScoreLog(
                     id = null,
                     playerId = it.player_id,
-                    round = game.totalRound,
+                    round = game.value?.totalRound ?: 0,
                     score = it.point
                 )
             )
@@ -165,7 +165,7 @@ class LeaderboardViewModel(
             },
             success = {
                 logi("success insert data to db")
-                listScore.value?.forEach {
+                getListScore().forEach {
                     it.player_id?.let { id ->
                         getScoreLog(id)
                     }
@@ -181,7 +181,6 @@ class LeaderboardViewModel(
         compositeDisposable.route(repository.getScoreLogByIdPlayer(id),
             main = {
                 if (it.isNotEmpty()) {
-                    loge("BEHASIL GET LOG")
                     val dataSets = ArrayList<ILineDataSet>()
                     it.forEach { playerWithScoreLog ->
                         val values = ArrayList<Entry>()
